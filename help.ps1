@@ -6,5 +6,5 @@ Get-Command | ForEach-Object {
         Synopsis =  if (-not $help.Remarks) {$help.Synopsis} else {$null}
     }
 [pscustomobject]$obj
-} | ft
+} | fl # same thing as format-list
 
