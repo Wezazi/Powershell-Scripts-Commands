@@ -1,13 +1,10 @@
-Get-Command | ForEach-Object { 
-    $name = $_.Name;
-    if (((Get-Help $name).remarks -match 'partial help')){
-        write-output ""
+Get-Command | ForEach-Object {
+    $help = Get-Help $_
+
+    $obj = [ordered]@{
+        Name     = $help.Name
+        Synopsis =  if (-not $help.Remarks) {$help.Synopsis} else {$null}
     }
-    else{
-        Get-Help $name | ForEach-Object{
-            $synopsis = $_.synopsis
-            Write-Output $name $synopsis `n
-        }
-    }
-};
+[pscustomobject]$obj
+} | ft
 
